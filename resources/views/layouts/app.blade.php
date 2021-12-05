@@ -21,6 +21,7 @@
 
 <body>
     <x-navbar />
+    {{-- @include('layouts.navigation') --}}
 
     {{ $slot }}
 
