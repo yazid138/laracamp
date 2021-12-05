@@ -28,7 +28,7 @@
                         Halo, {{ Auth::user()->name }}!
                         <img src="{{ Auth::user()->avatar }}" class="user-photo rounded-circle" alt="">
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu" style="right: 0; left: auto">
-                            <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dashboard') }}">My Dashboard</a></li>
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sing
