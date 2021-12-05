@@ -11,4 +11,14 @@ class Checkout extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+    public function camp()
+    {
+        return $this->hasMany(Camp::class);
+    }
 }

@@ -17,6 +17,7 @@ class CreateCampsTable extends Migration
             $table->id();
             $table->string('title', 100);
             $table->string('slug', 100)->unique();
+            $table->text('description');
             $table->integer('price')->unsigned();
             $table->timestamps();
             $table->softDeletes();

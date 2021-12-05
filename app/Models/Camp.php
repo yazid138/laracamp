@@ -11,4 +11,9 @@ class Camp extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
+
+    public function camBenefit()
+    {
+        return $this->hasMany(CampBenefit::class);
+    }
 }
