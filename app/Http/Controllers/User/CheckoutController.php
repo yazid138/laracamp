@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\Checkout\Store;
 use App\Models\Checkout;
 use App\Models\Camp;
 use Illuminate\Http\Request;
@@ -25,8 +26,12 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camp $camp)
+    public function create(Camp $camp, Request $request)
     {
+        if ($camp->isRegistered) {
+            $request->session()->flash('error', "You already registered on {$camp->title} camp.");
+            return redirect(route('dashboard'));
+        }
         return view('checkout.create', ['camp' => $camp]);
     }
 
@@ -36,29 +41,20 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Camp $camp)
+    public function store(Store $request, Camp $camp)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'occupation' => 'required',
-            'card_number' => 'required',
-            'expired' => 'required',
-            'cvc' => 'required',
-        ]);
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+        $data['camp_id'] = $camp->id;
 
-        $validated['user_id'] = Auth::id();
-        $validated['camp_id'] = $camp->id;
-
-        // return $validated;
         $user = Auth::user();
         // $user->name = $validated['name'];
         // $user->email = $validated['email'];
         // $user->occupation = 'tes';
-        $user->occupation = $validated['occupation'];
+        $user->occupation = $data['occupation'];
         $user->save();
 
-        Checkout::create($validated);
+        Checkout::create($data);
 
         return redirect(route('checkout.success'));
     }
