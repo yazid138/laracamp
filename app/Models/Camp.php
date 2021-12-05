@@ -10,10 +10,21 @@ class Camp extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = ['id'];
+    // protected $guarded = [];
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'price'
+    ];
 
-    public function camBenefit()
-    {
-        return $this->hasMany(CampBenefit::class);
-    }
+    // public function camBenefit()
+    // {
+    //     return $this->hasMany(CampBenefit::class);
+    // }
+
+    // public function checkout()
+    // {
+    //     return $this->belongsTo(Checkout::class);
+    // }
 }

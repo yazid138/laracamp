@@ -19,15 +19,16 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    //     'avatar',
-    //     'occupation',
-    //     'is_admin'
-    // ];
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'avatar',
+        'occupation',
+        'is_admin'
+    ];
+    // protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function checkout()
+    // {
+    //     return $this->belongsTo(Checkout::class);
+    // }
 }

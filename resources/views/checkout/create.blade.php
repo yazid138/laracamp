@@ -27,39 +27,40 @@
                         </div>
                         <div class="col-lg-1 col-12"></div>
                         <div class="col-lg-6 col-12">
-                            <form action="{{ route('checkout.success') }}" class="basic-form" method="POST">
+                            <form action="{{ route('checkout.store', $camp->id) }}" class="basic-form"
+                                method="POST">
                                 @csrf
                                 <div class="mb-4">
                                     <label for="name" class="form-label">Full Name</label>
                                     <input name="name" type="text" class="form-control" id="name"
-                                        aria-describedby="name">
+                                        aria-describedby="name" value="{{ Auth::user()->name }}">
                                 </div>
                                 <div class="mb-4">
                                     <label for="email" class="form-label">Email Address</label>
                                     <input name="email" type="email" class="form-control" id="email"
-                                        aria-describedby="email">
+                                        aria-describedby="email" value="{{ Auth::user()->email }}">
                                 </div>
                                 <div class="mb-4">
                                     <label for="occupation" class="form-label">Occupation</label>
                                     <input name="occupation" type="text" class="form-control" id="occupation"
-                                        aria-describedby="occupation">
+                                        aria-describedby="occupation" value="{{ Auth::user()->occupation }}">
                                 </div>
                                 <div class="mb-4">
                                     <label for="card-number" class="form-label">Card Number</label>
-                                    <input name="cardNumber" type="number" class="form-control" id="card-number"
+                                    <input name="card_number" type="number" class="form-control" id="card-number"
                                         aria-describedby="cardNumber">
                                 </div>
                                 <div class="mb-5">
                                     <div class="row">
                                         <div class="col-lg-6 col-12">
                                             <label for="expired" class="form-label">Expired</label>
-                                            <input name="expired" type="text" class="form-control" id="expired"
+                                            <input name="expired" type="month" class="form-control" id="expired"
                                                 aria-describedby="expired">
                                         </div>
                                         <div class="col-lg-6 col-12">
                                             <label for="cvc" class="form-label">CVC</label>
-                                            <input name="cvc" type="text" class="form-control" id="cvc"
-                                                aria-describedby="cvc">
+                                            <input name="cvc" type="number" class="form-control" id="cvc"
+                                                aria-describedby="cvc" maxlength="3">
                                         </div>
                                     </div>
                                 </div>
