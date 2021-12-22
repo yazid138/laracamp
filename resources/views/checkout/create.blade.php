@@ -64,17 +64,6 @@
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-4">
-                                    <label for="card-number" class="form-label">Card Number</label>
-                                    <input name="card_number" type="number" value="{{ old('card_number') }}"
-                                        class="form-control @error('card_number') is-invalid @enderror" id="card-number"
-                                        aria-describedby="cardNumber" required>
-                                    @error('card_number')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
                                 <div class="mb-5">
                                     <div class="row">
                                         <div class="col-lg-6 col-12">
