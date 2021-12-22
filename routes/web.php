@@ -33,6 +33,10 @@ Route::get('/auth/google/callback', [UserController::class, 'handleProviderCallb
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
+    // Midtrans route
+    Route::get('/payment/success', [CheckoutController::class, 'midtransCallback']);
+    Route::post('/payment/success', [CheckoutController::class, 'midtransCallback']);
+
     Route::middleware('ensureUserRole:admin')->group(function () {
         Route::prefix('admin/dashboard')->namespace('Admin')->name('admin.')->group(function () {
             Route::get('/', [AdminDashboard::class, 'index'])->name('dashboard');

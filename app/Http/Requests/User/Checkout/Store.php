@@ -29,9 +29,8 @@ class Store extends FormRequest
             'name' => 'required',
             'email' => 'required|email:dns',
             'occupation' => 'required',
-            'card_number' => 'required|numeric|digits_between:8,16',
-            'expired' => 'required|date|date_format:Y-m|after_or_equal:' . $now,
-            'cvc' => 'required|numeric|digits:3',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string'
         ];
     }
 }

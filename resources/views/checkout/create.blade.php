@@ -65,41 +65,28 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <label for="card-number" class="form-label">Card Number</label>
-                                    <input name="card_number" type="number" value="{{ old('card_number') }}"
-                                        class="form-control @error('card_number') is-invalid @enderror" id="card-number"
-                                        aria-describedby="cardNumber" required>
-                                    @error('card_number')
+                                    <label for="phone" class="form-label">phone</label>
+                                    <input name="phone" type="text"
+                                        class="form-control @error('phone') is-invalid @enderror" id="phone"
+                                        aria-describedby="phone" value="{{ old('phone', Auth::user()->phone) }}"
+                                        required>
+                                    @error('occupation')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
-                                <div class="mb-5">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <label for="expired" class="form-label">Expired</label>
-                                            <input name="expired" type="month" value="{{ old('expired') }}"
-                                                class="form-control @error('expired') is-invalid @enderror" id="expired"
-                                                aria-describedby="expired" required>
-                                            @error('expired')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                <div class="mb-4">
+                                    <label for="address" class="form-label">address</label>
+                                    <input name="address" type="text"
+                                        class="form-control @error('address') is-invalid @enderror" id="address"
+                                        aria-describedby="address"
+                                        value="{{ old('address', Auth::user()->address) }}" required>
+                                    @error('occupation')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
                                         </div>
-                                        <div class="col-lg-6 col-12">
-                                            <label for="cvc" class="form-label">CVC</label>
-                                            <input name="cvc" type="number" value="{{ old('cvc') }}"
-                                                class="form-control @error('cvc') is-invalid @enderror" id="cvc"
-                                                aria-describedby="cvc" maxlength="3" required>
-                                            @error('cvc')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                    @enderror
                                 </div>
                                 <button type="submit" class="w-100 btn btn-primary">Pay Now</button>
                                 <p class="text-center subheader mt-4">
