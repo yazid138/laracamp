@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Midtrans\Snap;
 use Midtrans\Config;
+use Midtrans\Notification;
 use Exception;
+use Str;
 
 class CheckoutController extends Controller
 {
@@ -64,8 +66,9 @@ class CheckoutController extends Controller
         $user = $request->user();
         // $user->name = $validated['name'];
         // $user->email = $validated['email'];
-        // $user->occupation = 'tes';
         $user->occupation = $data['occupation'];
+        $user->phone = $data['phone'];
+        $user->address = $data['address'];
         $user->save();
 
         $checkout = Checkout::create($data);
@@ -183,5 +186,49 @@ class CheckoutController extends Controller
         } catch (Exception $error) {
             return false;
         }
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        $notif = new Notification();
+
+        $transaction_status = $notif->transaction_status;
+        $fraud = $notif->fraud_status;
+
+        $checkout_id = explode('-', $notif->order_id)[0];
+        $checkout = Checkout::find($checkout_id);
+
+        if ($transaction_status == 'capture') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'challenge'
+                $checkout->payment_status = 'pending';
+            } else if ($fraud == 'accept') {
+                // TODO Set payment status in merchant's database to 'success'
+                $checkout->payment_status = 'paid';
+            }
+        } else if ($transaction_status == 'cancel') {
+            if ($fraud == 'challenge') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $checkout->payment_status = 'failed';
+            } else if ($fraud == 'accept') {
+                // TODO Set payment status in merchant's database to 'failure'
+                $checkout->payment_status = 'failed';
+            }
+        } else if ($transaction_status == 'deny') {
+            // TODO Set payment status in merchant's database to 'failure'
+            $checkout->payment_status = 'failed';
+        } else if ($transaction_status == 'settlement') {
+            // TODO set payment status in merchant's database to 'Settlement'
+            $checkout->payment_status = 'paid';
+        } else if ($transaction_status == 'pending') {
+            // TODO set payment status in merchant's database to 'Pending'
+            $checkout->payment_status = 'pending';
+        } else if ($transaction_status == 'expire') {
+            // TODO set payment status in merchant's database to 'expire'
+            $checkout->payment_status = 'failed';
+        }
+
+        $checkout->save();
+        return view('checkout.success');
     }
 }
