@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Midtrans\Snap;
 use Midtrans\Config;
 use Midtrans\Notification;
+use Midtrans\Transaction;
 use Exception;
 use Str;
 
@@ -190,7 +191,7 @@ class CheckoutController extends Controller
 
     public function midtransCallback(Request $request)
     {
-        $notif = new Notification();
+        $notif = $request->method() == 'POST' ? new Notification() : Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;
